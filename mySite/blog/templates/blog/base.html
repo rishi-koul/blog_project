@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+    <!-- Medium Style Editor -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Russo+One&display=swap" rel="stylesheet">
+
+</head>
+<body class="loader">
+        <!-- NAVBAR -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark techfont custom-navbar">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a href="{% url 'post_list' %}" class="navbar-brand bigbrand">My Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://github.com/rishi-koul">GitHub</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://www.linkedin.com/in/rishi-koul/">LinkedIn</a></li>
+            </ul>
+
+            <ul class="navbar-nav">
+                {% if user.is_authenticated%}
+                <li class="nav-item"><a class="nav-link"  href="{% url 'post_new' %}">New Post</a></li>
+                <li class="nav-item"><a class="nav-link"  href="{% url 'post_draft_list' %}">Drafts</a></li>
+                <li class="nav-item"><a class="nav-link"  href="{% url 'logout' %}?next=/">Log Out</a></li>
+                <li class="nav-link">Welcome: {{user.username}}</li>
+
+                {% else %}
+                <li><a class='nav navbar-right' href="{% url 'login' %}" >Login</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="blog_posts">
+                    {% block content%}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
